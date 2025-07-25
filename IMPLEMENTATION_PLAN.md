@@ -169,7 +169,8 @@ src/
 #### 3b: Analytics Dashboard
 1. **Admin Dashboard Interface**
    - Next.js/TypeScript/React implementation
-   - Clerk authentication integration
+   - Manual URL access (not visible on main site)
+   - Temporary .htaccess protection until auth implementation
    - Role-based access control (admin-only)
    - Configurable refresh intervals (30 seconds minimum, 5 minutes default)
 
@@ -199,38 +200,7 @@ src/
    - Conversion funnel analysis
    - ROI tracking for marketing efforts
 
-### Phase 4: Blog System
-1. **MDX Blog Infrastructure**
-   - Rich content with React components
-   - Reading progress tracking
-   - Time-to-read calculations
-   - Tags and categories
-
-2. **Authentication Integration**
-   - Clerk authentication (Google, Facebook, GitHub SSO)
-   - User profile management
-   - Comment permissions
-
-3. **Interactive Features**
-   - Real-time comments system
-   - Reaction buttons
-   - Search and filtering
-   - Related posts
-
-### Phase 5: Advanced Features
-1. **Performance Optimization**
-   - Image optimization
-   - Code splitting
-   - Caching strategies
-   - SEO enhancements
-
-2. **Accessibility**
-   - ARIA labels
-   - Keyboard navigation
-   - Screen reader support
-   - WCAG compliance
-
-### Phase 6: Authentication Services Integration
+### Phase 4: Authentication Services Integration
 1. **Clerk Authentication**
    - SSO providers (Google, Facebook, GitHub)
    - User management dashboard
@@ -242,6 +212,38 @@ src/
    - User-specific content
    - Session management
    - Security hardening
+
+3. **Domain-wide Integration**
+   - Blog authentication
+   - Dashboard authentication
+   - Future feature protection
+   - Single sign-on across all features
+
+### Phase 5: Blog System
+1. **MDX Blog Infrastructure**
+   - Rich content with React components
+   - Reading progress tracking
+   - Time-to-read calculations
+   - Tags and categories
+
+2. **Interactive Features**
+   - Real-time comments system
+   - Reaction buttons
+   - Search and filtering
+   - Related posts
+
+### Phase 6: Advanced Features
+1. **Performance Optimization**
+   - Image optimization
+   - Code splitting
+   - Caching strategies
+   - SEO enhancements
+
+2. **Accessibility**
+   - ARIA labels
+   - Keyboard navigation
+   - Screen reader support
+   - WCAG compliance
 
 ### Phase 7: Future Enhancements
 1. **E-commerce Integration**
@@ -325,20 +327,20 @@ Each feature will have:
 - Phase 1: ✅ COMPLETED
 - Phase 2: ✅ COMPLETED
 - Phase 3: 3-4 weeks (Tracking Analytics)
-- Phase 4: 2-3 weeks (Blog System)
-- Phase 5: 2-3 weeks (Advanced Features)
-- Phase 6: 2-3 weeks (Auth Integration)
+- Phase 4: 2-3 weeks (Authentication Services)
+- Phase 5: 2-3 weeks (Blog System)
+- Phase 6: 2-3 weeks (Advanced Features)
 - Phase 7: 3-4 weeks (Future Enhancements)
 
 ## Next Steps
 1. ✅ Complete Phase 2 (Additional Pages)
 2. 🎯 **Current**: Implement Phase 3 (Tracking Analytics)
 3. Create GitHub issues for tracking features
-4. Set up Clerk authentication for dashboard
-5. Implement comprehensive tracking system
-6. Build analytics dashboard
-7. Deploy and test tracking functionality
-8. Begin Phase 4 (Blog System)
+4. Implement comprehensive tracking system
+5. Build analytics dashboard with temporary .htaccess protection
+6. Deploy and test tracking functionality
+7. Begin Phase 4 (Authentication Services)
+8. Integrate Clerk authentication across all features
 
 ---
 
