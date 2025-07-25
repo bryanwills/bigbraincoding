@@ -1,0 +1,21 @@
+# Enable PHP processing
+AddType application/x-httpd-php .php
+
+# Allow POST requests to PHP files
+<Files "*.php">
+    Require all granted
+</Files>
+
+# Handle API requests
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Allow direct access to PHP files
+    RewriteCond %{REQUEST_FILENAME} -f
+    RewriteRule ^api/.*\.php$ - [L]
+
+    # Handle Next.js static files
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ /index.html [L]
+</IfModule>

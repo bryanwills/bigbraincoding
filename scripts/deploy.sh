@@ -57,7 +57,7 @@ fi
 # Step 5: Set proper permissions
 echo ""
 echo "🔐 Step 5: Setting permissions..."
-sudo chown -R www-data:www-data "$NGINX_DIR"
+sudo chown -R $USER:$USER "$NGINX_DIR"
 sudo chmod -R 755 "$NGINX_DIR"
 echo "✅ Permissions set"
 
