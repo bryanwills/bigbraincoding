@@ -1,0 +1,32 @@
+{
+    "docs": [
+      {
+        "name": "React Docs",
+        "url": "https://react.dev/learn"
+      },
+      {
+        "name": "Next.js Docs",
+        "url": "https://nextjs.org/docs"
+      },
+      {
+        "name": "TypeScript Docs",
+        "url": "https://www.typescriptlang.org/docs/"
+      },
+      {
+        "name": "c15t Docs",
+        "url": "https://c15t.com/docs"
+      },
+      {
+        "name": "Tailwind CSS Docs",
+        "url": "https://tailwindcss.com/docs"
+      },
+      {
+        "name": "Shadcn UI Docs",
+        "url": "https://ui.shadcn.com/docs"
+      },
+      {
+        "name": "Clerk Docs",
+        "url": "https://clerk.com/docs"
+      }
+    ]
+  }
