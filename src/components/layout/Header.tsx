@@ -6,7 +6,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import { Menu, X, Brain } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { NAVIGATION } from '@/lib/constants'
-import { cn } from '@/lib/utils'
+
 
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)

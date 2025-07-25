@@ -5,7 +5,7 @@ import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
 import { HERO_CTAS, PROJECTS } from '@/lib/constants'
-import { getRandomItem } from '@/lib/utils'
+
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 
 export default function Hero() {

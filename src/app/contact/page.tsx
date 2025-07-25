@@ -8,7 +8,7 @@ import { Textarea } from '@/components/ui/textarea'
 import { Label } from '@/components/ui/label'
 import { CONTACT_INFO } from '@/lib/constants'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
-import { Mail, Phone, MapPin, Clock, MessageSquare, Send, CheckCircle } from 'lucide-react'
+import { Mail, Phone, MapPin, Clock, Send, CheckCircle } from 'lucide-react'
 import Link from 'next/link'
 import SocialIcons from '@/components/shared/SocialIcons'
 
@@ -65,8 +65,8 @@ export default function ContactPage() {
               variants={fadeInUp}
               className="mt-6 text-lg text-muted-foreground max-w-3xl mx-auto"
             >
-              Ready to start your next project? We'd love to hear from you.
-              Let's discuss how we can help bring your ideas to life.
+              Ready to start your next project? We&apos;d love to hear from you.
+              Let&apos;s discuss how we can help bring your ideas to life.
             </motion.p>
           </motion.div>
         </div>
@@ -136,7 +136,7 @@ export default function ContactPage() {
                 <CardHeader>
                   <CardTitle className="text-2xl">Send us a Message</CardTitle>
                   <CardDescription>
-                    Fill out the form below and we'll get back to you within 24 hours.
+                    Fill out the form below and we&apos;ll get back to you within 24 hours.
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-6">
@@ -220,7 +220,7 @@ export default function ContactPage() {
                       <option value="10k-25k">$10,000 - $25,000</option>
                       <option value="25k-50k">$25,000 - $50,000</option>
                       <option value="50k-plus">$50,000+</option>
-                      <option value="discuss">Let's discuss</option>
+                      <option value="discuss">Let&apos;s discuss</option>
                     </select>
                   </div>
 
@@ -247,10 +247,10 @@ export default function ContactPage() {
             <motion.div variants={fadeInUp} className="space-y-8">
               <div>
                 <h2 className="text-3xl font-bold tracking-tight mb-6">
-                  Let's Start Your Project
+                  Let&apos;s Start Your Project
                 </h2>
                 <p className="text-lg text-muted-foreground mb-6">
-                  We're excited to hear about your project and help you bring your ideas to life.
+                  We&apos;re excited to hear about your project and help you bring your ideas to life.
                   Our team is ready to discuss your requirements and provide a customized solution.
                 </p>
                 <div className="space-y-4">
@@ -281,10 +281,10 @@ export default function ContactPage() {
               <div className="bg-primary/5 p-6 rounded-lg">
                 <h3 className="text-lg font-semibold mb-3">What to Expect</h3>
                 <div className="space-y-3 text-sm text-muted-foreground">
-                  <p>1. <strong>Initial Consultation:</strong> We'll discuss your project requirements and goals.</p>
-                  <p>2. <strong>Proposal:</strong> We'll provide a detailed proposal with timeline and pricing.</p>
+                  <p>1. <strong>Initial Consultation:</strong> We&apos;ll discuss your project requirements and goals.</p>
+                  <p>2. <strong>Proposal:</strong> We&apos;ll provide a detailed proposal with timeline and pricing.</p>
                   <p>3. <strong>Development:</strong> Our team will build your solution with regular updates.</p>
-                  <p>4. <strong>Launch:</strong> We'll deploy your project and provide ongoing support.</p>
+                  <p>4. <strong>Launch:</strong> We&apos;ll deploy your project and provide ongoing support.</p>
                 </div>
               </div>
             </motion.div>
@@ -327,7 +327,7 @@ export default function ContactPage() {
                 <CardContent>
                   <p className="text-muted-foreground">
                     Project timelines vary based on complexity. Simple websites take 2-4 weeks,
-                    while complex applications can take 2-3 months. We'll provide a detailed timeline during consultation.
+                    while complex applications can take 2-3 months. We&apos;ll provide a detailed timeline during consultation.
                   </p>
                 </CardContent>
               </Card>
@@ -336,7 +336,7 @@ export default function ContactPage() {
             <motion.div variants={fadeInUp}>
               <Card>
                 <CardHeader>
-                  <CardTitle className="text-lg">What's included in your pricing?</CardTitle>
+                  <CardTitle className="text-lg">What&apos;s included in your pricing?</CardTitle>
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
@@ -368,8 +368,8 @@ export default function ContactPage() {
                 </CardHeader>
                 <CardContent>
                   <p className="text-muted-foreground">
-                    Absolutely! We can integrate with your existing systems, APIs, and databases.
-                    We'll work with your current technology stack or recommend improvements.
+                    Absolutely!                     We can integrate with your existing systems, APIs, and databases.
+                    We&apos;ll work with your current technology stack or recommend improvements.
                   </p>
                 </CardContent>
               </Card>
@@ -397,7 +397,7 @@ export default function ContactPage() {
               variants={fadeInUp}
               className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto"
             >
-              Don't wait to bring your ideas to life. Contact us today and let's discuss your project.
+              Don&apos;t wait to bring your ideas to life. Contact us today and let&apos;s discuss your project.
             </motion.p>
             <motion.div
               variants={fadeInUp}
