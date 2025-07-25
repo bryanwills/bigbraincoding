@@ -1,4 +1,4 @@
-import { Project, Service, SocialLink, NavigationItem, HeroCTA } from '@/types';
+import { Project, Service, NavigationItem, HeroCTA } from '@/types';
 
 export const COMPANY_INFO = {
   name: 'Big Brain Coding',

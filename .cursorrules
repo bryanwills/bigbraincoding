@@ -1,0 +1,41 @@
+# Project Context
+
+## Infrastructure Setup
+- Server runs nginx and other services via Docker containers
+- nginx runs in a Docker container, not directly on the host machine
+- When debugging or configuring nginx, always reference the containerized setup
+- Ubuntu Server with Docker containers
+- Website files located at: `/var/www/bigbraincoding.com/html` (HOST PATH)
+- nginx runs in Docker container with volume mounts
+- Docker compose files at: `~/docker/{container_name}/docker-compose.yml`
+
+## Docker Structure
+- Each service has its own directory under ~/docker/
+- Use docker-compose commands to manage services
+- Access logs and configs through Docker commands, not direct file system access
+
+## nginx Container Specifics
+- nginx.conf location: `~/docker/nginx/nginx.conf` (host)
+- Logs directory: `~/docker/nginx/logs` (host)
+- Sites config: `~/docker/nginx/sites` (host)
+- Web files: `/var/www/bigbraincoding.com/html` (host)
+
+## Common Commands
+- View nginx logs: `docker-compose -f ~/docker/nginx/docker-compose.yml logs`
+- Edit nginx config: Access via Docker volume mounts or exec into container
+
+## Important: Path Mapping
+- nginx.conf uses CONTAINER paths (e.g., /var/www/html)
+- File edits happen on HOST paths (e.g., /var/www/bigbraincoding.com/html)
+- Always consider volume mounts when troubleshooting path issues
+
+## Important Notes
+- Always assume services are containerized unless explicitly stated otherwise
+- Don't look for services directly on the host filesystem
+- Use Docker commands for service management and troubleshooting
+- Never restart a Docker container. Always stop and start the container to ensure it works.
+- Before making changes to .conf files, first, create a backup of the file and append `date +%Y/%m/%d` to it and then make the changes.
+- If you try to find a service running on the server and you cannot find it, pause and ask me what to do before proceeding.
+- After working on the website and you go to verify it works, ask me if I can access it before continuing.
+- Check this file every 250 seconds for any updates and be sure to apply them when detected.
+- Before attempting any git commands or processes, check to see if the website works. It doesn't make sense to commit anything to git if the website doesn't work. If you are unsure, ask me first before doing anything related to git in regards to the website not being functional. If the website works fine, then you can ignore this.

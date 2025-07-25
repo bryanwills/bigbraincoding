@@ -315,7 +315,7 @@ export default function ProjectsPage() {
               variants={fadeInUp}
               className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto"
             >
-              Let's discuss how we can bring your ideas to life with the same level of innovation and quality.
+              Let&apos;s discuss how we can bring your ideas to life with the same level of innovation and quality.
             </motion.p>
             <motion.div
               variants={fadeInUp}

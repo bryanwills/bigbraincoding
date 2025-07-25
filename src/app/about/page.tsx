@@ -100,7 +100,7 @@ export default function AboutPage() {
               variants={fadeInUp}
               className="mt-6 text-lg text-muted-foreground max-w-3xl mx-auto"
             >
-              We're a passionate team of developers dedicated to creating innovative software solutions
+              We&apos;re a passionate team of developers dedicated to creating innovative software solutions
               that solve real-world problems and drive business growth.
             </motion.p>
           </motion.div>
@@ -289,7 +289,7 @@ export default function AboutPage() {
               variants={fadeInUp}
               className="mt-4 text-lg text-muted-foreground"
             >
-              Key milestones in our company's growth
+              Key milestones in our company&apos;s growth
             </motion.p>
           </motion.div>
 
@@ -355,7 +355,7 @@ export default function AboutPage() {
               variants={fadeInUp}
               className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto"
             >
-              Let's discuss how we can help bring your ideas to life with our innovative approach and modern technology.
+              Let&apos;s discuss how we can help bring your ideas to life with our innovative approach and modern technology.
             </motion.p>
             <motion.div
               variants={fadeInUp}

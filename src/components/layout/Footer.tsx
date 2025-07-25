@@ -1,7 +1,7 @@
 import Link from 'next/link'
-import { Brain, Mail, Phone, MapPin } from 'lucide-react'
+import { Brain, Mail, Phone } from 'lucide-react'
 import { CONTACT_INFO, COMPANY_INFO } from '@/lib/constants'
-import { cn } from '@/lib/utils'
+
 import SocialIcons from '@/components/shared/SocialIcons'
 
 export default function Footer() {

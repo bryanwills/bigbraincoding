@@ -6,10 +6,10 @@ import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
 import { SERVICES } from '@/lib/constants'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
-import { Globe, Server, Brain, Smartphone, Puzzle, Check, Clock, Users, Shield, Zap } from 'lucide-react'
+import { Globe, Server, Brain, Smartphone, Puzzle, Check, Users, Shield, Zap } from 'lucide-react'
 import Link from 'next/link'
 
-const iconMap: Record<string, any> = {
+  const iconMap: Record<string, React.ComponentType<{ className?: string }>> = {
   Globe,
   Server,
   Brain,
@@ -115,7 +115,7 @@ export default function ServicesPage() {
               className="mt-6 text-lg text-muted-foreground max-w-3xl mx-auto"
             >
               We offer comprehensive software development solutions tailored to your needs.
-              From simple websites to complex AI-powered applications, we've got you covered.
+              From simple websites to complex AI-powered applications, we&apos;ve got you covered.
             </motion.p>
           </motion.div>
         </div>
@@ -323,7 +323,7 @@ export default function ServicesPage() {
               variants={fadeInUp}
               className="mt-4 text-lg text-muted-foreground max-w-2xl mx-auto"
             >
-              Let's discuss how we can bring your ideas to life with modern technology and innovative solutions.
+              Let&apos;s discuss how we can bring your ideas to life with modern technology and innovative solutions.
             </motion.p>
             <motion.div
               variants={fadeInUp}

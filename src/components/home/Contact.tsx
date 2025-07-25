@@ -5,7 +5,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/com
 import { Button } from '@/components/ui/button'
 import { CONTACT_INFO } from '@/lib/constants'
 import { fadeInUp, staggerContainer } from '@/lib/animations'
-import { Mail, Phone, Clock, MessageSquare } from 'lucide-react'
+import { Mail, Clock, MessageSquare } from 'lucide-react'
 import Link from 'next/link'
 import SocialIcons from '@/components/shared/SocialIcons'
 
@@ -25,7 +25,7 @@ export default function Contact() {
               Ready to Start Your Project?
             </h2>
             <p className="mt-4 text-lg text-muted-foreground">
-              Let's discuss how we can bring your ideas to life with modern technology
+              Let&apos;s discuss how we can bring your ideas to life with modern technology
             </p>
           </motion.div>
 
@@ -43,7 +43,7 @@ export default function Contact() {
                     <span>Get in Touch</span>
                   </CardTitle>
                   <CardDescription>
-                    We'd love to hear about your project
+                    We&apos;d love to hear about your project
                   </CardDescription>
                 </CardHeader>
                 <CardContent className="space-y-4">
