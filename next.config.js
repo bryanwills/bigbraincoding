@@ -1,5 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  // Enable static export
+  output: 'export',
   // Allow cross-origin requests from the development server
   allowedDevOrigins: [
     '38.45.65.66',

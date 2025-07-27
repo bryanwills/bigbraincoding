@@ -5,6 +5,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import TrackingProvider from "@/components/tracking/TrackingProvider";
 import {
   ConsentManagerDialog,
   ConsentManagerProvider,
@@ -49,6 +50,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        {/* Head content will be handled by Next.js */}
+      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
@@ -65,14 +69,16 @@ export default function RootLayout({
               backendURL: 'https://bryan-wills-111n91xb-europe-onboarding.c15t.dev',
             }}
           >
-            <ConsentManagerDialog />
-            <CookieBanner />
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-              <ThemeToggle />
-            </div>
+            <TrackingProvider>
+              <ConsentManagerDialog />
+              <CookieBanner />
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+                <ThemeToggle />
+              </div>
+            </TrackingProvider>
           </ConsentManagerProvider>
         </ThemeProvider>
       </body>
