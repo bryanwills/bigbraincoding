@@ -1,11 +1,11 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import TrackingProvider from "@/components/tracking/TrackingProvider";
 import {
   ConsentManagerDialog,
   ConsentManagerProvider,
@@ -51,19 +51,7 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Google Analytics */}
-        <Script
-          src="https://www.googletagmanager.com/gtag/js?id=G-KTE9D3466K"
-          strategy="afterInteractive"
-        />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-KTE9D3466K');
-          `}
-        </Script>
+        {/* Head content will be handled by Next.js */}
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -81,14 +69,16 @@ export default function RootLayout({
               backendURL: 'https://bryan-wills-111n91xb-europe-onboarding.c15t.dev',
             }}
           >
-            <ConsentManagerDialog />
-            <CookieBanner />
-            <div className="flex min-h-screen flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-              <ThemeToggle />
-            </div>
+            <TrackingProvider>
+              <ConsentManagerDialog />
+              <CookieBanner />
+              <div className="flex min-h-screen flex-col">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+                <ThemeToggle />
+              </div>
+            </TrackingProvider>
           </ConsentManagerProvider>
         </ThemeProvider>
       </body>

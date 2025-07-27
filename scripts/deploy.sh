@@ -2,6 +2,7 @@
 
 # Big Brain Coding - Static Site Deployment Script
 # This script builds and deploys the static site to NGINX
+# NOTE: Google Analytics code is injected into all built HTML files after every build via scripts/inject-ga.js
 
 set -e  # Exit on any error
 
@@ -25,14 +26,23 @@ echo ""
 echo "🔨 Step 2: Building static site..."
 npm run build
 
+# Step 2.5: Inject Google Analytics into all built HTML files
+echo ""
+echo "📊 Step 2.5: Injecting Google Analytics into built HTML files..."
+node scripts/inject-ga.js
+
 # Step 3: Create backup of current site
 echo ""
 echo "📋 Step 3: Creating backup of current site..."
 BACKUP_DIR="/tmp/bigbraincoding-backup-$(date +%Y%m%d-%H%M%S)"
+BACKUP_ARCHIVE="$BACKUP_DIR.tar.bz2"
 if [ -d "$NGINX_DIR" ]; then
     mkdir -p "$BACKUP_DIR"
     cp -r "$NGINX_DIR"/* "$BACKUP_DIR/" 2>/dev/null || true
-    echo "✅ Backup created at: $BACKUP_DIR"
+    echo "📦 Compressing backup to save disk space..."
+    tar -cjf "$BACKUP_ARCHIVE" -C "$(dirname "$BACKUP_DIR")" "$(basename "$BACKUP_DIR")"
+    rm -rf "$BACKUP_DIR"
+    echo "✅ Compressed backup created at: $BACKUP_ARCHIVE"
 else
     echo "ℹ️  No existing site to backup"
 fi

@@ -1,0 +1,9 @@
+{
+  "agentCanUpdateSnapshot": true,
+  "terminals": [
+    {
+      "name": "Cursor Chat Terminal",
+      "command": "bash --rcfile ~/.bashrc"
+    }
+  ]
+}
