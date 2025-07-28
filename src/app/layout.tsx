@@ -6,6 +6,7 @@ import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import TrackingProvider from "@/components/tracking/TrackingProvider";
+import { Analytics } from "@vercel/analytics/next";
 import {
   ConsentManagerDialog,
   ConsentManagerProvider,
@@ -81,6 +82,7 @@ export default function RootLayout({
             </TrackingProvider>
           </ConsentManagerProvider>
         </ThemeProvider>
+        <Analytics />
       </body>
     </html>
   );
