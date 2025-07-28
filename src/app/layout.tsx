@@ -7,6 +7,7 @@ import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
 import TrackingProvider from "@/components/tracking/TrackingProvider";
 import { Analytics } from "@vercel/analytics/next";
+import VercelAnalyticsDebug from "@/components/VercelAnalyticsDebug";
 import {
   ConsentManagerDialog,
   ConsentManagerProvider,
@@ -58,6 +59,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
       >
+        {/* Vercel Analytics - Load outside of consent management to ensure it works */}
+        <Analytics debug={true} />
+        <VercelAnalyticsDebug />
+
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -82,7 +87,6 @@ export default function RootLayout({
             </TrackingProvider>
           </ConsentManagerProvider>
         </ThemeProvider>
-        <Analytics />
       </body>
     </html>
   );
