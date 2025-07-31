@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Button } from '@/components/ui/button'
-import { HERO_CTAS, PROJECTS } from '@/lib/constants'
+import { HERO_CTAS } from '@/lib/constants'
 
 import { fadeInUp, staggerContainer } from '@/lib/animations'
 
@@ -20,7 +20,6 @@ export default function Hero() {
   }, [])
 
   const currentHeroCTA = HERO_CTAS[currentCTA]
-  const currentProject = PROJECTS.find(p => p.id === currentHeroCTA.projectId)
 
   return (
     <section className="relative overflow-hidden bg-gradient-to-br from-background via-background to-muted/20 py-20">

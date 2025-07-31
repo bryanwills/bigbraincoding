@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
-import { writeFile, mkdir } from 'fs/promises';
+import { writeFile, mkdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
 
@@ -9,7 +9,12 @@ export async function POST(request: NextRequest) {
 
     // Get client IP address
     const forwarded = request.headers.get('x-forwarded-for');
-    const ip = forwarded ? forwarded.split(',')[0] : 'unknown';
+    let ip = forwarded ? forwarded.split(',')[0] : 'unknown';
+
+    // Strip IPv6 prefix if present (::ffff:)
+    if (ip.startsWith('::ffff:')) {
+      ip = ip.substring(7);
+    }
 
     // Add IP address to event
     event.ipAddress = ip;
@@ -25,103 +30,101 @@ export async function POST(request: NextRequest) {
         sessionId: event.sessionId,
         eventType: event.eventType,
         pageUrl: event.pageUrl,
-        ipAddress: event.ipAddress,
-        userAgent: event.userAgent,
-        deviceInfo: event.deviceInfo
-      });
-
-      return NextResponse.json({ success: true, logged: true, environment: 'vercel' });
-    } else {
-      // Local/Server deployment - use file system
-      // Create timestamp for file naming
-      const now = new Date();
-      const year = now.getFullYear();
-      const month = String(now.getMonth() + 1).padStart(2, '0');
-      const day = String(now.getDate()).padStart(2, '0');
-      const hour = String(now.getHours()).padStart(2, '0');
-      const minute = String(now.getMinutes()).padStart(2, '0');
-      const second = String(now.getSeconds()).padStart(2, '0');
-
-      // Create directory structure: ~/bigbraincoding.com/YYYY/MM/DD/
-      const baseDir = process.env.HOME || process.env.USERPROFILE || '/tmp';
-      const logDir = join(baseDir, 'bigbraincoding.com', String(year), month, day);
-
-      // Ensure directory exists
-      if (!existsSync(logDir)) {
-        await mkdir(logDir, { recursive: true });
-      }
-
-      // Create log file name with timestamp
-      const fileName = `${hour}-${minute}-${second}-${event.sessionId.substring(0, 8)}.json`;
-      const filePath = join(logDir, fileName);
-
-      // Format the log entry
-      const logEntry = {
-        timestamp: event.timestamp,
-        sessionId: event.sessionId,
-        eventType: event.eventType,
-        pageUrl: event.pageUrl,
-        referrer: event.referrer,
-        ipAddress: event.ipAddress,
+        ipAddress: event.ipAddress, // Now includes IP
         userAgent: event.userAgent,
         deviceInfo: event.deviceInfo,
-        eventData: event.eventData,
         timeOnPage: event.timeOnPage,
-        timeOnPageSeconds: event.timeOnPage ? Math.round(event.timeOnPage / 1000) : undefined,
         scrollDepth: event.scrollDepth,
-        performance: event.performance,
-        engagement: event.engagement
-      };
-
-      // Write to file
-      await writeFile(filePath, JSON.stringify(logEntry, null, 2));
-
-      // Also write to a daily summary file
-      const summaryFileName = `${year}-${month}-${day}-summary.json`;
-      const summaryPath = join(logDir, summaryFileName);
-
-      let summary: { events: Array<{ timestamp: string; eventType: string; sessionId: string; pageUrl: string; deviceType: string; browser: string }>; totalEvents: number; uniqueSessions: Set<string> } = { events: [], totalEvents: 0, uniqueSessions: new Set() };
-
-      try {
-        if (existsSync(summaryPath)) {
-          const summaryData = await import('fs').then(fs => fs.readFileSync(summaryPath, 'utf8'));
-          summary = JSON.parse(summaryData);
-          summary.uniqueSessions = new Set(summary.uniqueSessions);
-        }
-      } catch {
-        // If summary file doesn't exist or is corrupted, start fresh
-        summary = { events: [], totalEvents: 0, uniqueSessions: new Set() };
-      }
-
-      // Add event to summary
-      summary.events.push({
-        timestamp: event.timestamp,
-        eventType: event.eventType,
-        sessionId: event.sessionId,
-        pageUrl: event.pageUrl,
-        deviceType: event.deviceInfo.deviceType,
-        browser: event.deviceInfo.browser
       });
-
-      summary.totalEvents++;
-      summary.uniqueSessions.add(event.sessionId);
-
-      // Convert Set back to array for JSON serialization
-      const summaryForFile = {
-        ...summary,
-        uniqueSessions: Array.from(summary.uniqueSessions),
-        lastUpdated: new Date().toISOString()
-      };
-
-      await writeFile(summaryPath, JSON.stringify(summaryForFile, null, 2));
-
-      return NextResponse.json({ success: true, logged: true, environment: 'server' });
+      return NextResponse.json({ message: 'Event received (Vercel environment)' });
     }
 
+    // For local/self-hosted environment, write to file
+    const date = new Date(event.timestamp);
+    const year = date.getFullYear().toString();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    const hour = date.getHours().toString().padStart(2, '0');
+    const minute = date.getMinutes().toString().padStart(2, '0');
+    const second = date.getSeconds().toString().padStart(2, '0');
+
+    // Corrected base directory for logs
+    const baseLogDir = join(process.env.HOME || '/home/bryanwi09', 'docker/nginx/logs/bigbraincoding.com');
+    const dailyLogDir = join(baseLogDir, year, month, day);
+
+    if (!existsSync(dailyLogDir)) {
+      await mkdir(dailyLogDir, { recursive: true });
+    }
+
+    const fileName = `${hour}-${minute}-${second}-${event.sessionId.substring(0, 8)}-${event.eventType}.json`;
+    const filePath = join(dailyLogDir, fileName);
+
+    await writeFile(filePath, JSON.stringify(event, null, 2));
+
+    // Update daily summary
+    const summaryFileName = `${year}-${month}-${day}-summary.json`;
+    const summaryFilePath = join(dailyLogDir, summaryFileName);
+
+    let dailySummary = {
+      totalEvents: 0,
+      uniqueVisitors: new Set<string>(),
+      uniqueSessions: new Set<string>(),
+      pageViews: 0,
+      clicks: 0,
+      ipAddresses: {} as { [key: string]: { totalVisits: number, uniqueSessions: Set<string> } }
+    };
+
+    if (existsSync(summaryFilePath)) {
+      const existingSummary = await readFile(summaryFilePath, 'utf8');
+      const parsedSummary = JSON.parse(existingSummary);
+      dailySummary.totalEvents = parsedSummary.totalEvents || 0;
+      dailySummary.pageViews = parsedSummary.pageViews || 0;
+      dailySummary.clicks = parsedSummary.clicks || 0;
+      dailySummary.uniqueVisitors = new Set(parsedSummary.uniqueVisitors || []);
+      dailySummary.uniqueSessions = new Set(parsedSummary.uniqueSessions || []);
+      for (const ip in parsedSummary.ipAddresses) {
+        dailySummary.ipAddresses[ip] = {
+          totalVisits: parsedSummary.ipAddresses[ip].totalVisits || 0,
+          uniqueSessions: new Set(parsedSummary.ipAddresses[ip].uniqueSessions || [])
+        };
+      }
+    }
+
+    dailySummary.totalEvents++;
+    dailySummary.uniqueVisitors.add(event.ipAddress);
+    dailySummary.uniqueSessions.add(event.sessionId);
+
+    if (event.eventType === 'page_view') {
+      dailySummary.pageViews++;
+    } else if (event.eventType === 'click') {
+      dailySummary.clicks++;
+    }
+
+    if (!dailySummary.ipAddresses[event.ipAddress]) {
+      dailySummary.ipAddresses[event.ipAddress] = { totalVisits: 0, uniqueSessions: new Set<string>() };
+    }
+    dailySummary.ipAddresses[event.ipAddress].totalVisits++;
+    dailySummary.ipAddresses[event.ipAddress].uniqueSessions.add(event.sessionId);
+
+    const serializableSummary = {
+      ...dailySummary,
+      uniqueVisitors: Array.from(dailySummary.uniqueVisitors),
+      uniqueSessions: Array.from(dailySummary.uniqueSessions),
+      ipAddresses: Object.fromEntries(
+        Object.entries(dailySummary.ipAddresses).map(([ip, data]) => [
+          ip,
+          { totalVisits: data.totalVisits, uniqueSessions: Array.from(data.uniqueSessions) }
+        ])
+      )
+    };
+
+    await writeFile(summaryFilePath, JSON.stringify(serializableSummary, null, 2));
+
+    return NextResponse.json({ message: 'Event received and logged' });
   } catch (error) {
-    console.error('Error logging tracking event:', error);
+    console.error('Tracking API error:', error);
     return NextResponse.json(
-      { success: false, error: 'Failed to log tracking event' },
+      { error: 'Failed to log event' },
       { status: 500 }
     );
   }

@@ -5,10 +5,6 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import TrackingProvider from "@/components/tracking/TrackingProvider";
-import { Analytics } from "@vercel/analytics/next";
-import { SpeedInsights } from "@vercel/speed-insights/next";
-import VercelAnalyticsDebug from "@/components/VercelAnalyticsDebug";
 import {
   ConsentManagerDialog,
   ConsentManagerProvider,
@@ -53,18 +49,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <head>
-        {/* Head content will be handled by Next.js */}
-      </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
         suppressHydrationWarning={true}
       >
-        {/* Vercel Analytics and Speed Insights - Load outside of consent management to ensure they work */}
-        <Analytics debug={true} />
-        <SpeedInsights />
-        <VercelAnalyticsDebug />
-
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
@@ -77,16 +65,14 @@ export default function RootLayout({
               backendURL: 'https://bryan-wills-111n91xb-europe-onboarding.c15t.dev',
             }}
           >
-            <TrackingProvider>
-              <ConsentManagerDialog />
-              <CookieBanner />
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-                <ThemeToggle />
-              </div>
-            </TrackingProvider>
+            <ConsentManagerDialog />
+            <CookieBanner />
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <ThemeToggle />
+            </div>
           </ConsentManagerProvider>
         </ThemeProvider>
       </body>

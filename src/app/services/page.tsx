@@ -130,7 +130,7 @@ export default function ServicesPage() {
             animate="visible"
             className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
-                                    {SERVICES.map((service, index) => {
+                                    {SERVICES.map((service) => {
               const IconComponent = iconMap[service.icon] || Globe
 
               return (
@@ -204,7 +204,7 @@ export default function ServicesPage() {
             variants={staggerContainer}
             className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-4"
           >
-            {processSteps.map((step, index) => {
+            {processSteps.map((step) => {
               const IconComponent = step.icon || Globe
 
               return (
@@ -255,7 +255,7 @@ export default function ServicesPage() {
             variants={staggerContainer}
             className="grid grid-cols-1 gap-8 md:grid-cols-3"
           >
-            {pricingPlans.map((plan, index) => (
+            {pricingPlans.map((plan) => (
               <motion.div
                 key={plan.name}
                 variants={fadeInUp}

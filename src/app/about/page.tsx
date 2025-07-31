@@ -179,7 +179,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
-            {values.map((value, index) => {
+            {values.map((value) => {
               const IconComponent = value.icon
 
               return (
@@ -236,7 +236,7 @@ export default function AboutPage() {
             variants={staggerContainer}
             className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
-            {teamMembers.map((member, index) => (
+            {teamMembers.map((member) => (
               <motion.div
                 key={member.name}
                 variants={fadeInUp}
@@ -301,19 +301,19 @@ export default function AboutPage() {
             <div className="absolute left-1/2 transform -translate-x-1/2 w-0.5 h-full bg-primary/20"></div>
 
             <div className="space-y-12">
-              {milestones.map((milestone, index) => (
+              {milestones.map((milestone) => (
                 <motion.div
                   key={milestone.id}
                   variants={fadeInUp}
                   className={`relative flex items-center ${
-                    index % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
+                    milestones.indexOf(milestone) % 2 === 0 ? 'flex-row' : 'flex-row-reverse'
                   }`}
                 >
                   {/* Timeline Dot */}
                   <div className="absolute left-1/2 transform -translate-x-1/2 w-4 h-4 bg-primary rounded-full border-4 border-background"></div>
 
                   {/* Content */}
-                  <div className={`w-1/2 ${index % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
+                  <div className={`w-1/2 ${milestones.indexOf(milestone) % 2 === 0 ? 'pr-8 text-right' : 'pl-8 text-left'}`}>
                     <Card className="transition-all duration-200 hover:shadow-lg">
                       <CardHeader>
                         <div className="flex items-center space-x-2">
