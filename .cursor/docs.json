@@ -27,6 +27,10 @@
       {
         "name": "Clerk Docs",
         "url": "https://clerk.com/docs"
+      },
+      {
+        "name": "Vercel Docs",
+        "url": "https://vercel.com/docs"
       }
     ]
   }
