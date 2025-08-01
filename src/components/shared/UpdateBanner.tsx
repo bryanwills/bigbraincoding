@@ -60,9 +60,9 @@ export default function UpdateBanner() {
         >
           <div className="flex items-center space-x-4 px-6 py-4 bg-primary/95 backdrop-blur supports-[backdrop-filter]:bg-primary/90 border border-primary/20 rounded-lg shadow-lg">
             <Bell className="h-5 w-5 text-primary-foreground flex-shrink-0" />
-            <p className="text-sm text-primary-foreground whitespace-nowrap">
-              🚀&nbsp;We're building exciting products to bring convenience to your everyday tasks. Check back frequently for updates!
-            </p>
+                            <p className="text-sm text-primary-foreground whitespace-nowrap">
+                  🚀&nbsp;We&apos;re building exciting products to bring convenience to your everyday tasks. Check back frequently for updates!
+                </p>
             <Button
               variant="ghost"
               size="sm"
