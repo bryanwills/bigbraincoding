@@ -6,6 +6,7 @@ import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
+import UpdateBanner from "@/components/shared/UpdateBanner";
 import {
   ConsentManagerDialog,
   ConsentManagerProvider,
@@ -78,6 +79,7 @@ export default function RootLayout({
           >
             <ConsentManagerDialog />
             <CookieBanner />
+            <UpdateBanner />
             <div className="flex min-h-screen flex-col">
               <Header />
               <main className="flex-1">{children}</main>
