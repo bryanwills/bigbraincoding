@@ -68,6 +68,7 @@ export default function AnalyticsPage() {
     if (isAllowed) {
       fetchAnalyticsData()
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAllowed, dateRange])
 
   const fetchAnalyticsData = async () => {

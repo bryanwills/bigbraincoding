@@ -65,7 +65,7 @@ export async function POST(request: NextRequest) {
     const summaryFileName = `${year}-${month}-${day}-summary.json`;
     const summaryFilePath = join(dailyLogDir, summaryFileName);
 
-    let dailySummary = {
+    const dailySummary = {
       totalEvents: 0,
       uniqueVisitors: new Set<string>(),
       uniqueSessions: new Set<string>(),
