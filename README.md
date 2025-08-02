@@ -1,4 +1,22 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Big Brain Coding - Modern Software Development
+
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app) for Big Brain Coding's company website.
+
+## 🚀 Features
+
+### Current Features:
+- **Modern Web Design** - Responsive, accessible, and performant
+- **AI Integration Services** - Showcase of AI-powered solutions
+- **Project Portfolio** - Interactive project showcases
+- **Contact Management** - Professional contact forms and communication
+- **Analytics Integration** - Comprehensive tracking and insights
+- **Welcome Banner** - Informative banner with 24-hour persistence
+
+### Coming Soon:
+- **Automated Project Documentation** - Screenshot generation for GitHub repos and live websites
+- **Blog System** - MDX-based content with authentication and comments
+- **E-commerce Integration** - Stripe-powered payment processing
+- **Advanced Analytics** - Enhanced tracking and reporting features
 
 ## Getting Started
 
