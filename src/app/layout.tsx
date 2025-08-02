@@ -1,11 +1,12 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import Script from "next/script";
 import "./globals.css";
 import Header from "@/components/layout/Header";
 import Footer from "@/components/layout/Footer";
 import { ThemeProvider } from "@/components/providers/ThemeProvider";
 import { ThemeToggle } from "@/components/ui/theme-toggle";
-import TrackingProvider from "@/components/tracking/TrackingProvider";
+import UpdateBanner from "@/components/shared/UpdateBanner";
 import {
   ConsentManagerDialog,
   ConsentManagerProvider,
@@ -28,6 +29,14 @@ export const metadata: Metadata = {
   keywords: ["software development", "web design", "AI integration", "Next.js", "React", "TypeScript"],
   authors: [{ name: "Big Brain Coding" }],
   creator: "Big Brain Coding",
+  icons: {
+    icon: [
+      { url: '/brain-favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', type: 'image/x-icon' }
+    ],
+    shortcut: '/brain-favicon.svg',
+    apple: '/brain-favicon.svg'
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -51,7 +60,14 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        {/* Head content will be handled by Next.js */}
+        <Script
+          defer
+          data-domain="bigbraincoding.com"
+          src="https://plausible.bryanwills.dev/js/script.file-downloads.hash.outbound-links.pageview-props.revenue.tagged-events.js"
+        />
+        <Script id="plausible-init">
+          {`window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }`}
+        </Script>
       </head>
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
@@ -69,16 +85,15 @@ export default function RootLayout({
               backendURL: 'https://bryan-wills-111n91xb-europe-onboarding.c15t.dev',
             }}
           >
-            <TrackingProvider>
-              <ConsentManagerDialog />
-              <CookieBanner />
-              <div className="flex min-h-screen flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-                <ThemeToggle />
-              </div>
-            </TrackingProvider>
+            <ConsentManagerDialog />
+            <CookieBanner />
+            <UpdateBanner />
+            <div className="flex min-h-screen flex-col">
+              <Header />
+              <main className="flex-1">{children}</main>
+              <Footer />
+              <ThemeToggle />
+            </div>
           </ConsentManagerProvider>
         </ThemeProvider>
       </body>

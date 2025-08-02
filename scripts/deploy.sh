@@ -29,7 +29,7 @@ npm run build
 # Step 2.5: Inject Google Analytics into all built HTML files
 echo ""
 echo "📊 Step 2.5: Injecting Google Analytics into built HTML files..."
-node scripts/inject-ga.js
+node "$PROJECT_DIR/scripts/inject-ga.js"
 
 # Step 3: Create backup of current site
 echo ""

@@ -7,7 +7,6 @@ import { Menu, X, Brain } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import { NAVIGATION } from '@/lib/constants'
 
-
 export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 

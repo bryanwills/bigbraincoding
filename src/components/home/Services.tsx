@@ -41,7 +41,7 @@ export default function Services() {
             variants={staggerContainer}
             className="mt-16 grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
           >
-            {SERVICES.map((service, index) => {
+            {SERVICES.map((service) => {
               const IconComponent = iconMap[service.icon as keyof typeof iconMap]
 
               return (

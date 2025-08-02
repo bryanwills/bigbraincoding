@@ -34,7 +34,7 @@ export default function Projects() {
             variants={staggerContainer}
             className="grid grid-cols-1 gap-8 lg:grid-cols-3"
           >
-            {PROJECTS.map((project, index) => (
+            {PROJECTS.map((project) => (
               <motion.div
                 key={project.id}
                 variants={fadeInUp}
