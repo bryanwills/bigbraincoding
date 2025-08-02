@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { writeFile, mkdir, readFile } from 'fs/promises';
 import { join } from 'path';
 import { existsSync } from 'fs';
+import botDetectionService from '@/lib/botDetection';
 
 export async function POST(request: NextRequest) {
   try {
@@ -19,6 +20,49 @@ export async function POST(request: NextRequest) {
     // Add IP address to event
     event.ipAddress = ip;
 
+    // Bot detection and rate limiting
+    const botDetectionResult = botDetectionService.detectBot(
+      ip,
+      event.userAgent || request.headers.get('user-agent') || '',
+      {
+        timeOnPage: event.timeOnPage,
+        mouseMovements: event.engagement?.mouseMovements || 0
+      }
+    );
+
+    // Add bot detection data to event
+    event.botDetection = {
+      isBot: botDetectionResult.isBot,
+      confidence: botDetectionResult.confidence,
+      reason: botDetectionResult.reason,
+      requiresVerification: botDetectionResult.requiresVerification,
+      rateLimitExceeded: botDetectionResult.rateLimitExceeded
+    };
+
+    // If bot detected with high confidence, log but don't process normally
+    if (botDetectionResult.isBot && botDetectionResult.confidence > 0.8) {
+      console.log('Bot detected:', {
+        ip,
+        userAgent: event.userAgent,
+        confidence: botDetectionResult.confidence,
+        reason: botDetectionResult.reason
+      });
+
+      // Still log the event but mark it as bot activity
+      event.eventType = `bot_${event.eventType}`;
+    }
+
+    // If rate limited, return error
+    if (botDetectionResult.rateLimitExceeded) {
+      return NextResponse.json(
+        {
+          error: 'Rate limit exceeded',
+          resetTime: Date.now() + 60 * 60 * 1000 // 1 hour from now
+        },
+        { status: 429 }
+      );
+    }
+
     // Check if we're on Vercel
     const isVercel = process.env.VERCEL === '1';
 
@@ -35,8 +79,12 @@ export async function POST(request: NextRequest) {
         deviceInfo: event.deviceInfo,
         timeOnPage: event.timeOnPage,
         scrollDepth: event.scrollDepth,
+        botDetection: event.botDetection
       });
-      return NextResponse.json({ message: 'Event received (Vercel environment)' });
+      return NextResponse.json({
+        message: 'Event received (Vercel environment)',
+        requiresVerification: botDetectionResult.requiresVerification
+      });
     }
 
     // For local/self-hosted environment, write to file
@@ -71,6 +119,7 @@ export async function POST(request: NextRequest) {
       uniqueSessions: new Set<string>(),
       pageViews: 0,
       clicks: 0,
+      botEvents: 0,
       ipAddresses: {} as { [key: string]: { totalVisits: number, uniqueSessions: Set<string> } }
     };
 
@@ -80,6 +129,7 @@ export async function POST(request: NextRequest) {
       dailySummary.totalEvents = parsedSummary.totalEvents || 0;
       dailySummary.pageViews = parsedSummary.pageViews || 0;
       dailySummary.clicks = parsedSummary.clicks || 0;
+      dailySummary.botEvents = parsedSummary.botEvents || 0;
       dailySummary.uniqueVisitors = new Set(parsedSummary.uniqueVisitors || []);
       dailySummary.uniqueSessions = new Set(parsedSummary.uniqueSessions || []);
       for (const ip in parsedSummary.ipAddresses) {
@@ -98,6 +148,11 @@ export async function POST(request: NextRequest) {
       dailySummary.pageViews++;
     } else if (event.eventType === 'click') {
       dailySummary.clicks++;
+    }
+
+    // Track bot events separately
+    if (botDetectionResult.isBot) {
+      dailySummary.botEvents++;
     }
 
     if (!dailySummary.ipAddresses[event.ipAddress]) {
@@ -120,7 +175,11 @@ export async function POST(request: NextRequest) {
 
     await writeFile(summaryFilePath, JSON.stringify(serializableSummary, null, 2));
 
-    return NextResponse.json({ message: 'Event received and logged' });
+    return NextResponse.json({
+      message: 'Event received and logged',
+      requiresVerification: botDetectionResult.requiresVerification,
+      botDetected: botDetectionResult.isBot
+    });
   } catch (error) {
     console.error('Tracking API error:', error);
     return NextResponse.json(
