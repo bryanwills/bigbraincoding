@@ -29,6 +29,14 @@ export const metadata: Metadata = {
   keywords: ["software development", "web design", "AI integration", "Next.js", "React", "TypeScript"],
   authors: [{ name: "Big Brain Coding" }],
   creator: "Big Brain Coding",
+  icons: {
+    icon: [
+      { url: '/brain-favicon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico', type: 'image/x-icon' }
+    ],
+    shortcut: '/brain-favicon.svg',
+    apple: '/brain-favicon.svg'
+  },
   openGraph: {
     type: "website",
     locale: "en_US",
