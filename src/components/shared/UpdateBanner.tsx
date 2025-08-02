@@ -13,19 +13,6 @@ export default function UpdateBanner() {
   const [isDismissed, setIsDismissed] = useState(false)
 
   useEffect(() => {
-    // TEMPORARY: Force banner to appear on every page refresh for testing
-    // TODO: Remove this before commit/deploy and restore the original logic below
-
-    // Show banner after delay
-    const timer = setTimeout(() => {
-      setIsVisible(true)
-      // Set CSS custom property for header positioning
-      document.documentElement.style.setProperty('--banner-height', '60px')
-    }, BANNER_DELAY)
-
-    return () => clearTimeout(timer)
-
-    /* ORIGINAL LOGIC (commented out for testing):
     // Check if banner was dismissed within last 24 hours
     const dismissedTime = localStorage.getItem(BANNER_KEY)
     const now = Date.now()
@@ -35,11 +22,12 @@ export default function UpdateBanner() {
       // Show banner after delay
       const timer = setTimeout(() => {
         setIsVisible(true)
+        // Set CSS custom property for header positioning
+        document.documentElement.style.setProperty('--banner-height', '60px')
       }, BANNER_DELAY)
 
       return () => clearTimeout(timer)
     }
-    */
   }, [])
 
   const handleDismiss = () => {
