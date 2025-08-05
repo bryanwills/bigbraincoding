@@ -176,6 +176,13 @@ export default function EnhancedAnalyticsDashboard() {
             </SelectContent>
           </Select>
 
+          <a
+            href="/analytics/fingerprint"
+            className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 transition-colors text-sm"
+          >
+            Fingerprint Analytics
+          </a>
+
           {selectedPlatform === 'nginx' && (
             <Select value={selectedLogType} onValueChange={(value) => setSelectedLogType(value as 'all' | 'access' | 'tracking' | 'ip_tracking')}>
               <SelectTrigger className="w-32">
@@ -267,18 +274,28 @@ export default function EnhancedAnalyticsDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {Object.entries(analyticsData.nginx.summary.filteredPages || {})
-                      .sort(([, a], [, b]) => (b as number) - (a as number))
-                      .slice(0, 10)
-                      .map(([page, count]) => (
-                        <div key={page} className="flex justify-between items-center">
-                          <span className="font-medium">{page}</span>
-                          <div className="flex items-center gap-2">
-                            <Progress value={((count as number) / analyticsData.nginx.summary.totalRequests) * 100} className="w-24" />
-                            <Badge variant="secondary">{count}</Badge>
+                    {(() => {
+                      const filteredPages = analyticsData.nginx.summary.filteredPages;
+                      console.log('EnhancedAnalyticsDashboard filteredPages:', filteredPages); // Debug log
+
+                      if (!filteredPages || typeof filteredPages !== 'object') {
+                        console.warn('EnhancedAnalyticsDashboard filteredPages is not an object:', filteredPages);
+                        return <div className="text-gray-600">No page data available</div>;
+                      }
+
+                      return Object.entries(filteredPages)
+                        .sort(([, a], [, b]) => (b as number) - (a as number))
+                        .slice(0, 10)
+                        .map(([page, count]) => (
+                          <div key={page} className="flex justify-between items-center">
+                            <span className="font-medium">{page}</span>
+                            <div className="flex items-center gap-2">
+                              <Progress value={((count as number) / analyticsData.nginx.summary.totalRequests) * 100} className="w-24" />
+                              <Badge variant="secondary">{count}</Badge>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ));
+                    })()}
                   </div>
                 </CardContent>
               </Card>
@@ -291,19 +308,29 @@ export default function EnhancedAnalyticsDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {Object.entries(analyticsData.nginx.summary.statusCodes)
-                      .sort(([, a], [, b]) => (b as number) - (a as number))
-                      .map(([code, count]) => (
-                        <div key={code} className="flex justify-between items-center">
-                          <Badge variant={code.startsWith('2') ? 'default' : code.startsWith('4') ? 'destructive' : 'secondary'}>
-                            {code}
-                          </Badge>
-                          <div className="flex items-center gap-2">
-                            <Progress value={((count as number) / analyticsData.nginx.summary.totalRequests) * 100} className="w-24" />
-                            <span>{count}</span>
+                    {(() => {
+                      const statusCodes = analyticsData.nginx.summary.statusCodes;
+                      console.log('EnhancedAnalyticsDashboard statusCodes:', statusCodes); // Debug log
+
+                      if (!statusCodes || typeof statusCodes !== 'object') {
+                        console.warn('EnhancedAnalyticsDashboard statusCodes is not an object:', statusCodes);
+                        return <div className="text-gray-600">No status code data available</div>;
+                      }
+
+                      return Object.entries(statusCodes)
+                        .sort(([, a], [, b]) => (b as number) - (a as number))
+                        .map(([code, count]) => (
+                          <div key={code} className="flex justify-between items-center">
+                            <Badge variant={code.startsWith('2') ? 'default' : code.startsWith('4') ? 'destructive' : 'secondary'}>
+                              {code}
+                            </Badge>
+                            <div className="flex items-center gap-2">
+                              <Progress value={((count as number) / analyticsData.nginx.summary.totalRequests) * 100} className="w-24" />
+                              <span>{count}</span>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ));
+                    })()}
                   </div>
                 </CardContent>
               </Card>
@@ -316,18 +343,28 @@ export default function EnhancedAnalyticsDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {Object.entries(analyticsData.nginx.summary.topUserAgents)
-                      .sort(([, a], [, b]) => b - a)
-                      .slice(0, 10)
-                      .map(([browser, count]) => (
-                        <div key={browser} className="flex justify-between items-center">
-                          <span className="font-medium">{browser}</span>
-                          <div className="flex items-center gap-2">
-                            <Progress value={(count / analyticsData.nginx.summary.totalRequests) * 100} className="w-24" />
-                            <Badge variant="secondary">{count}</Badge>
+                    {(() => {
+                      const topUserAgents = analyticsData.nginx.summary.topUserAgents;
+                      console.log('EnhancedAnalyticsDashboard topUserAgents:', topUserAgents); // Debug log
+
+                      if (!topUserAgents || typeof topUserAgents !== 'object') {
+                        console.warn('EnhancedAnalyticsDashboard topUserAgents is not an object:', topUserAgents);
+                        return <div className="text-gray-600">No browser data available</div>;
+                      }
+
+                      return Object.entries(topUserAgents)
+                        .sort(([, a], [, b]) => b - a)
+                        .slice(0, 10)
+                        .map(([browser, count]) => (
+                          <div key={browser} className="flex justify-between items-center">
+                            <span className="font-medium">{browser}</span>
+                            <div className="flex items-center gap-2">
+                              <Progress value={(count / analyticsData.nginx.summary.totalRequests) * 100} className="w-24" />
+                              <Badge variant="secondary">{count}</Badge>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ));
+                    })()}
                   </div>
                 </CardContent>
               </Card>
@@ -340,18 +377,28 @@ export default function EnhancedAnalyticsDashboard() {
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {Object.entries(analyticsData.nginx.summary.topReferers)
-                      .sort(([, a], [, b]) => b - a)
-                      .slice(0, 10)
-                      .map(([referer, count]) => (
-                        <div key={referer} className="flex justify-between items-center">
-                          <span className="font-medium">{referer || 'Direct'}</span>
-                          <div className="flex items-center gap-2">
-                            <Progress value={(count / analyticsData.nginx.summary.totalRequests) * 100} className="w-24" />
-                            <Badge variant="secondary">{count}</Badge>
+                    {(() => {
+                      const topReferers = analyticsData.nginx.summary.topReferers;
+                      console.log('EnhancedAnalyticsDashboard topReferers:', topReferers); // Debug log
+
+                      if (!topReferers || typeof topReferers !== 'object') {
+                        console.warn('EnhancedAnalyticsDashboard topReferers is not an object:', topReferers);
+                        return <div className="text-gray-600">No referer data available</div>;
+                      }
+
+                      return Object.entries(topReferers)
+                        .sort(([, a], [, b]) => b - a)
+                        .slice(0, 10)
+                        .map(([referer, count]) => (
+                          <div key={referer} className="flex justify-between items-center">
+                            <span className="font-medium">{referer || 'Direct'}</span>
+                            <div className="flex items-center gap-2">
+                              <Progress value={(count / analyticsData.nginx.summary.totalRequests) * 100} className="w-24" />
+                              <Badge variant="secondary">{count}</Badge>
+                            </div>
                           </div>
-                        </div>
-                      ))}
+                        ));
+                    })()}
                   </div>
                 </CardContent>
               </Card>

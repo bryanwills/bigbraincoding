@@ -12,6 +12,7 @@ import {
   ConsentManagerProvider,
   CookieBanner,
 } from '@c15t/react';
+import FingerprintTracker from "@/components/analytics/FingerprintTracker";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -93,6 +94,7 @@ export default function RootLayout({
               <main className="flex-1">{children}</main>
               <Footer />
               <ThemeToggle />
+              <FingerprintTracker />
             </div>
           </ConsentManagerProvider>
         </ThemeProvider>
