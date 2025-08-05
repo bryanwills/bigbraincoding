@@ -18,21 +18,21 @@ export const NAVIGATION: NavigationItem[] = [
 
 export const PROJECTS: Project[] = [
   {
-    id: 'nutrisync',
-    name: 'NutriSync',
-    shortDescription: 'AI-powered meal planning with grocery integration',
-    description: 'An intelligent meal planning application that uses AI to suggest recipes, manage dietary preferences, and integrate with grocery stores for seamless shopping.',
-    image: '/images/projects/nutrisync.jpg',
-    technologies: ['React', 'TypeScript', 'AI/ML', 'Node.js', 'PostgreSQL'],
+    id: 'mealforge',
+    name: 'MealForge',
+    shortDescription: 'AI-powered meal planning with recipe management',
+    description: 'An intelligent meal planning application that uses AI to suggest recipes, manage dietary preferences, and provide comprehensive meal planning solutions.',
+    image: '/images/projects/mealforge.jpg',
+    technologies: ['React', 'TypeScript', 'AI/ML', 'Node.js', 'PostgreSQL', 'Next.js'],
     status: 'development',
     features: [
       'AI-powered recipe suggestions',
       'Dietary preference management',
-      'Ingredient substitution',
-      'Recipe scaling (2x, 4x, 1/2)',
+      'Recipe management and organization',
+      'Meal planning tools',
+      'Recipe scaling capabilities',
       'Grocery list generation',
-      'Kroger & Walmart API integration',
-      'Direct grocery ordering'
+      'Modern web interface'
     ],
   },
   {
@@ -150,12 +150,12 @@ export const SERVICES: Service[] = [
 
 export const HERO_CTAS: HeroCTA[] = [
   {
-    id: 'nutrisync-cta',
+    id: 'mealforge-cta',
     title: 'Revolutionize Your Meal Planning',
-    description: 'Discover NutriSync - the AI-powered meal planning app that makes healthy eating effortless.',
-    projectId: 'nutrisync',
+    description: 'Discover MealForge - the AI-powered meal planning app that makes healthy eating effortless.',
+    projectId: 'mealforge',
     ctaText: 'Learn More',
-    ctaLink: '/projects#nutrisync',
+    ctaLink: '/projects#mealforge',
   },
   {
     id: 'mindmate-cta',
