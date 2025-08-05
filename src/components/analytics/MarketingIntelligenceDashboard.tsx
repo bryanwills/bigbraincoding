@@ -304,50 +304,59 @@ export default function MarketingIntelligenceDashboard() {
             </CardHeader>
             <CardContent>
               <div className="space-y-4">
-                {visitorProfiles.map((visitor) => (
-                  <div
-                    key={visitor.ip}
-                    className="border rounded-lg p-4 hover:bg-muted/50 cursor-pointer"
-                    onClick={() => setSelectedVisitor(visitor)}
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center space-x-3">
-                        <div className="w-3 h-3 rounded-full bg-green-500"></div>
-                        <div>
-                          <div className="font-medium">{visitor.ip}</div>
-                          <div className="text-sm text-muted-foreground">
-                            {visitor.totalVisits} visits • {formatDuration(visitor.totalTimeOnSite)}
+                {(() => {
+                  console.log('MarketingIntelligenceDashboard visitorProfiles:', visitorProfiles); // Debug log
+
+                  if (!visitorProfiles || !Array.isArray(visitorProfiles)) {
+                    console.warn('MarketingIntelligenceDashboard visitorProfiles is not an array:', visitorProfiles);
+                    return <div className="text-gray-600">No visitor profiles available</div>;
+                  }
+
+                                          return visitorProfiles.map((visitor) => (
+                          <div
+                            key={visitor.ip}
+                            className="border rounded-lg p-4 hover:bg-muted/50 cursor-pointer"
+                            onClick={() => setSelectedVisitor(visitor)}
+                          >
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center space-x-3">
+                                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                                <div>
+                                  <div className="font-medium">{visitor.ip}</div>
+                                  <div className="text-sm text-muted-foreground">
+                                    {visitor.totalVisits} visits • {formatDuration(visitor.totalTimeOnSite)}
+                                  </div>
+                                </div>
+                              </div>
+                              <div className="text-right">
+                                <div className={`font-bold ${getLeadScoreColor(visitor.leadScore)}`}>
+                                  {Math.round(visitor.leadScore * 100)}%
+                                </div>
+                                <div className="text-xs text-muted-foreground">Lead Score</div>
+                              </div>
+                            </div>
+
+                            <div className="mt-3 space-y-2">
+                              <div className="flex items-center space-x-2">
+                                <Badge variant={visitor.timeBasedPatterns.returnVisitor ? "default" : "secondary"}>
+                                  {visitor.timeBasedPatterns.returnVisitor ? "Return Visitor" : "New Visitor"}
+                                </Badge>
+                                <Badge variant="outline">
+                                  {visitor.highEngagementPages.length} key pages
+                                </Badge>
+                                <Badge variant="outline">
+                                  {visitor.conversionEvents.length} conversions
+                                </Badge>
+                              </div>
+
+                              <div className="flex items-center space-x-2 text-sm text-muted-foreground">
+                                <Clock className="w-4 h-4" />
+                                <span>Last visit: {new Date(visitor.lastVisit).toLocaleString()}</span>
+                              </div>
+                            </div>
                           </div>
-                        </div>
-                      </div>
-                      <div className="text-right">
-                        <div className={`font-bold ${getLeadScoreColor(visitor.leadScore)}`}>
-                          {Math.round(visitor.leadScore * 100)}%
-                        </div>
-                        <div className="text-xs text-muted-foreground">Lead Score</div>
-                      </div>
-                    </div>
-
-                    <div className="mt-3 space-y-2">
-                                             <div className="flex items-center space-x-2">
-                         <Badge variant={visitor.timeBasedPatterns.returnVisitor ? "default" : "secondary"}>
-                           {visitor.timeBasedPatterns.returnVisitor ? "Return Visitor" : "New Visitor"}
-                         </Badge>
-                        <Badge variant="outline">
-                          {visitor.highEngagementPages.length} key pages
-                        </Badge>
-                        <Badge variant="outline">
-                          {visitor.conversionEvents.length} conversions
-                        </Badge>
-                      </div>
-
-                      <div className="flex items-center space-x-2 text-sm text-muted-foreground">
-                        <Clock className="w-4 h-4" />
-                        <span>Last visit: {new Date(visitor.lastVisit).toLocaleString()}</span>
-                      </div>
-                    </div>
-                  </div>
-                ))}
+                        ));
+                      })()}
               </div>
             </CardContent>
           </Card>
@@ -366,22 +375,32 @@ export default function MarketingIntelligenceDashboard() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      {salesIntelligence.highValueVisitors.map((visitor) => (
-                        <div key={visitor.ip} className="flex items-center justify-between p-3 border rounded">
-                          <div>
-                            <div className="font-medium">{visitor.ip}</div>
-                            <div className="text-sm text-muted-foreground">
-                              {visitor.conversionEvents.join(', ')}
+                      {(() => {
+                        const highValueVisitors = salesIntelligence?.highValueVisitors;
+                        console.log('MarketingIntelligenceDashboard highValueVisitors:', highValueVisitors); // Debug log
+
+                        if (!highValueVisitors || !Array.isArray(highValueVisitors)) {
+                          console.warn('MarketingIntelligenceDashboard highValueVisitors is not an array:', highValueVisitors);
+                          return <div className="text-gray-600">No high value visitors available</div>;
+                        }
+
+                                                return highValueVisitors.map((visitor) => (
+                          <div key={visitor.ip} className="flex items-center justify-between p-3 border rounded">
+                            <div>
+                              <div className="font-medium">{visitor.ip}</div>
+                              <div className="text-sm text-muted-foreground">
+                                {visitor.conversionEvents.join(', ')}
+                              </div>
+                            </div>
+                            <div className="text-right">
+                              <div className="font-bold text-green-600">
+                                {Math.round(visitor.leadScore * 100)}%
+                              </div>
+                              <div className="text-xs text-muted-foreground">Score</div>
                             </div>
                           </div>
-                          <div className="text-right">
-                            <div className="font-bold text-green-600">
-                              {Math.round(visitor.leadScore * 100)}%
-                            </div>
-                            <div className="text-xs text-muted-foreground">Score</div>
-                          </div>
-                        </div>
-                      ))}
+                        ));
+                      })()}
                     </div>
                   </CardContent>
                 </Card>
@@ -395,7 +414,16 @@ export default function MarketingIntelligenceDashboard() {
                   </CardHeader>
                   <CardContent>
                     <div className="space-y-3">
-                      {salesIntelligence.conversionOpportunities.map((opp) => (
+                      {(() => {
+                        const conversionOpportunities = salesIntelligence?.conversionOpportunities;
+                        console.log('MarketingIntelligenceDashboard conversionOpportunities:', conversionOpportunities); // Debug log
+
+                        if (!conversionOpportunities || !Array.isArray(conversionOpportunities)) {
+                          console.warn('MarketingIntelligenceDashboard conversionOpportunities is not an array:', conversionOpportunities);
+                          return <div className="text-gray-600">No conversion opportunities available</div>;
+                        }
+
+                        return conversionOpportunities.map((opp) => (
                         <div key={opp.visitor.ip} className="p-3 border rounded">
                           <div className="flex items-center justify-between mb-2">
                             <div className="font-medium">{opp.visitor.ip}</div>
@@ -407,7 +435,8 @@ export default function MarketingIntelligenceDashboard() {
                             {opp.opportunity}
                           </div>
                         </div>
-                      ))}
+                      ));
+                    })()}
                     </div>
                   </CardContent>
                 </Card>

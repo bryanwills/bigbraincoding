@@ -40,36 +40,29 @@ export async function POST(request: NextRequest) {
     }
 
     if (selectedLogFiles.length === 0) {
-      return NextResponse.json({
-        analytics: null,
-        error: 'No log files found'
-      });
+      return NextResponse.json(null);
     }
 
     // Parse log files
     const entries = await nginxLogParser.parseLogFiles(selectedLogFiles);
+    console.log(`IP Analytics API: Parsed ${entries.length} total entries from ${selectedLogFiles.length} log files`);
 
     // Filter by date range if provided
     let filteredEntries = entries;
     if (dateRange && dateRange.start && dateRange.end) {
       filteredEntries = nginxLogParser.filterByDateRange(entries, dateRange.start, dateRange.end);
+      console.log(`IP Analytics API: After date filtering: ${filteredEntries.length} entries`);
     }
 
     // Get detailed analytics for the specific IP
     const analytics = nginxLogParser.getIPAnalytics(filteredEntries, ipAddress);
+    console.log(`IP Analytics API: Analytics for IP ${ipAddress}: ${analytics?.totalVisits || 0} visits`);
 
     if (!analytics) {
-      return NextResponse.json({
-        analytics: null,
-        error: 'IP address not found in logs'
-      });
+      return NextResponse.json(null);
     }
 
-    return NextResponse.json({
-      analytics,
-      logType,
-      filesProcessed: selectedLogFiles
-    });
+    return NextResponse.json(analytics);
   } catch (error) {
     console.error('IP Analytics API error:', error);
     return NextResponse.json(

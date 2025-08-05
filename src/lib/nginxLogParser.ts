@@ -612,7 +612,7 @@ class NGINXLogParser {
 
     return {
       ipAddress,
-      totalVisits: ipEntries.length,
+      totalVisits: sessions.length, // Changed from ipEntries.length to sessions.length
       sessions: sessions.length,
       averageTimeOnSite,
       pages,

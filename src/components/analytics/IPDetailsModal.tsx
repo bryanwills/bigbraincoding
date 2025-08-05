@@ -243,18 +243,30 @@ export default function IPDetailsModal({ isOpen, onClose, ipAddress, dateRange }
                 </CardHeader>
                 <CardContent>
                   <div className="space-y-2">
-                    {Object.entries(analytics.devices).map(([device, count]) => (
-                      <div key={device} className="flex justify-between">
-                        <span>{device}</span>
-                        <Badge variant="secondary">{count}</Badge>
-                      </div>
-                    ))}
-                    {Object.entries(analytics.browsers).map(([browser, count]) => (
-                      <div key={browser} className="flex justify-between">
-                        <span>{browser}</span>
-                        <Badge variant="secondary">{count}</Badge>
-                      </div>
-                    ))}
+                    {(() => {
+                      const devices = analytics.devices;
+                      const browsers = analytics.browsers;
+
+                      console.log('IPDetailsModal Devices:', devices); // Debug log
+                      console.log('IPDetailsModal Browsers:', browsers); // Debug log
+
+                      return (
+                        <>
+                          {devices && typeof devices === 'object' && Object.entries(devices).map(([device, count]) => (
+                            <div key={device} className="flex justify-between">
+                              <span>{device}</span>
+                              <Badge variant="secondary">{count}</Badge>
+                            </div>
+                          ))}
+                          {browsers && typeof browsers === 'object' && Object.entries(browsers).map(([browser, count]) => (
+                            <div key={browser} className="flex justify-between">
+                              <span>{browser}</span>
+                              <Badge variant="secondary">{count}</Badge>
+                            </div>
+                          ))}
+                        </>
+                      );
+                    })()}
                   </div>
                 </CardContent>
               </Card>
@@ -268,17 +280,27 @@ export default function IPDetailsModal({ isOpen, onClose, ipAddress, dateRange }
               </CardHeader>
               <CardContent>
                 <div className="space-y-2">
-                  {Object.entries(analytics.pages)
-                    .sort(([, a], [, b]) => b - a)
-                    .map(([page, count]) => (
-                      <div key={page} className="flex justify-between items-center">
-                        <span className="font-medium">{page}</span>
-                        <div className="flex items-center gap-2">
-                          <Progress value={(count / analytics.totalVisits) * 100} className="w-24" />
-                          <Badge variant="secondary">{count}</Badge>
+                  {(() => {
+                    const pages = analytics.pages;
+                    console.log('IPDetailsModal Pages:', pages); // Debug log
+
+                    if (!pages || typeof pages !== 'object') {
+                      console.warn('IPDetailsModal pages is not an object:', pages);
+                      return <div className="text-gray-600">No page data available</div>;
+                    }
+
+                    return Object.entries(pages)
+                      .sort(([, a], [, b]) => b - a)
+                      .map(([page, count]) => (
+                        <div key={page} className="flex justify-between items-center">
+                          <span className="font-medium">{page}</span>
+                          <div className="flex items-center gap-2">
+                            <Progress value={(count / analytics.totalVisits) * 100} className="w-24" />
+                            <Badge variant="secondary">{count}</Badge>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ));
+                  })()}
                 </div>
               </CardContent>
             </Card>
@@ -291,29 +313,39 @@ export default function IPDetailsModal({ isOpen, onClose, ipAddress, dateRange }
               </CardHeader>
               <CardContent>
                 <div className="space-y-4">
-                  {analytics.sessionDetails.map((session, index) => (
-                    <div key={session.sessionId} className="border rounded-lg p-4">
-                      <div className="flex justify-between items-start mb-2">
-                        <div>
-                          <h4 className="font-medium">Session {index + 1}</h4>
-                          <p className="text-sm text-gray-600">
-                            {formatDate(session.startTime)} - {formatDate(session.endTime)}
-                          </p>
+                  {(() => {
+                    const sessionDetails = analytics.sessionDetails;
+                    console.log('IPDetailsModal Session Details:', sessionDetails); // Debug log
+
+                    if (!sessionDetails || !Array.isArray(sessionDetails)) {
+                      console.warn('IPDetailsModal sessionDetails is not an array:', sessionDetails);
+                      return <div className="text-gray-600">No session details available</div>;
+                    }
+
+                    return sessionDetails.map((session, index) => (
+                      <div key={session.sessionId || index} className="border rounded-lg p-4">
+                        <div className="flex justify-between items-start mb-2">
+                          <div>
+                            <h4 className="font-medium">Session {index + 1}</h4>
+                            <p className="text-sm text-gray-600">
+                              {formatDate(session.startTime)} - {formatDate(session.endTime)}
+                            </p>
+                          </div>
+                          <Badge variant="outline">{formatDuration(session.duration)}</Badge>
                         </div>
-                        <Badge variant="outline">{formatDuration(session.duration)}</Badge>
+                        <div className="text-sm text-gray-600 mb-2">
+                          {session.totalRequests} requests
+                        </div>
+                        <div className="flex flex-wrap gap-1">
+                          {(session.pages || []).map((page, pageIndex) => (
+                            <Badge key={pageIndex} variant="secondary" className="text-xs">
+                              {page}
+                            </Badge>
+                          ))}
+                        </div>
                       </div>
-                      <div className="text-sm text-gray-600 mb-2">
-                        {session.totalRequests} requests
-                      </div>
-                      <div className="flex flex-wrap gap-1">
-                        {session.pages.map((page, pageIndex) => (
-                          <Badge key={pageIndex} variant="secondary" className="text-xs">
-                            {page}
-                          </Badge>
-                        ))}
-                      </div>
-                    </div>
-                  ))}
+                    ));
+                  })()}
                 </div>
               </CardContent>
             </Card>
@@ -326,18 +358,27 @@ export default function IPDetailsModal({ isOpen, onClose, ipAddress, dateRange }
               </CardHeader>
               <CardContent>
                 <div className="max-h-96 overflow-y-auto space-y-2">
-                  {logs.map((log, index) => (
-                    <div key={index} className="border rounded p-3 text-sm">
-                      <div className="flex justify-between items-start mb-1">
-                        <span className="font-mono text-xs">{formatDate(log.timestamp)}</span>
-                        <Badge variant={log.statusCode >= 400 ? 'destructive' : 'default'}>
-                          {log.statusCode}
-                        </Badge>
+                  {(() => {
+                    console.log('IPDetailsModal Logs data:', logs); // Debug log
+
+                    if (!logs || !Array.isArray(logs)) {
+                      console.warn('IPDetailsModal logs is not an array:', logs);
+                      return <div className="text-gray-600">No logs available</div>;
+                    }
+
+                    return logs.map((log, index) => (
+                      <div key={index} className="border rounded p-3 text-sm">
+                        <div className="flex justify-between items-start mb-1">
+                          <span className="font-mono text-xs">{formatDate(log.timestamp)}</span>
+                          <Badge variant={log.statusCode >= 400 ? 'destructive' : 'default'}>
+                            {log.statusCode}
+                          </Badge>
+                        </div>
+                        <div className="font-medium">{log.method} {log.path}</div>
+                        <div className="text-xs text-gray-600 truncate">{log.userAgent}</div>
                       </div>
-                      <div className="font-medium">{log.method} {log.path}</div>
-                      <div className="text-xs text-gray-600 truncate">{log.userAgent}</div>
-                    </div>
-                  ))}
+                    ));
+                  })()}
                 </div>
               </CardContent>
             </Card>
