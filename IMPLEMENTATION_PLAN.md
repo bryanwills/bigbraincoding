@@ -11,7 +11,7 @@ Big Brain Coding is a software development company specializing in modern web te
 - Chrome Extension Development
 
 ## Product Portfolio (Placeholder Names)
-1. **NutriSync** - AI-powered meal planning app with grocery integration
+1. **MealForge** - AI-powered meal planning app with recipe management
 2. **MindMate** - ADHD/Neurodiverse AI Assistant for habit tracking
 3. **AccessiView** - Chrome extension for neurodiverse-friendly browsing
 

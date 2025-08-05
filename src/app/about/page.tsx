@@ -17,7 +17,7 @@ const values = [
   {
     icon: Target,
     title: 'Excellence in Delivery',
-    description: 'We strive for excellence in every project, delivering high-quality solutions on time.'
+    description: 'We strive for excellence in every project, building high-quality solutions on time.'
   },
   {
     icon: Users,
@@ -32,7 +32,7 @@ const values = [
   {
     icon: Zap,
     title: 'Fast & Efficient',
-    description: 'We deliver results quickly without compromising on quality or attention to detail.'
+    description: 'We build solutions quickly without compromising on quality or attention to detail.'
   },
   {
     icon: Globe,
@@ -60,13 +60,13 @@ const milestones = [
   },
   {
     id: 'first-projects',
-    year: '2024',
+    year: '2025',
     title: 'First Projects',
-    description: 'Successfully launched our first projects including NutriSync, MindMate, and AccessiView.'
+    description: 'Started development on our first projects including MealForge, MindMate, and AccessiView.'
   },
   {
     id: 'technology-stack',
-    year: '2024',
+    year: '2025',
     title: 'Technology Stack',
     description: 'Established our modern technology stack with Next.js, TypeScript, and AI integration.'
   },

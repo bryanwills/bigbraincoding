@@ -20,7 +20,7 @@ const projectStats = [
     icon: Users,
     value: '100%',
     label: 'Client Satisfaction',
-    description: 'Delivering exceptional results'
+                description: 'Building exceptional solutions'
   },
   {
     icon: Clock,
@@ -192,7 +192,7 @@ export default function ProjectsPage() {
                         <div>
                           <h5 className="font-medium text-sm text-muted-foreground">Results</h5>
                           <p className="text-sm mt-1">
-                            Delivering high-quality solutions that exceed client expectations and drive business growth.
+                            Building high-quality solutions that exceed client expectations and drive business growth.
                           </p>
                         </div>
                       </div>
@@ -249,7 +249,7 @@ export default function ProjectsPage() {
               variants={fadeInUp}
               className="mt-4 text-lg text-muted-foreground"
             >
-              We follow a systematic approach to deliver exceptional results
+              We follow a systematic approach to build exceptional solutions
             </motion.p>
           </motion.div>
 

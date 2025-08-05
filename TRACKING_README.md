@@ -111,7 +111,7 @@ trackEvent('contact_form_submitted', {
 });
 
 trackEvent('project_viewed', {
-  projectId: 'nutrisync',
+  projectId: 'mealforge',
   source: 'homepage'
 });
 ```

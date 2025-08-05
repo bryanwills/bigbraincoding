@@ -11,6 +11,10 @@ const nextConfig = {
   // Enable experimental features if needed
   experimental: {
     // Add any experimental features here
+  },
+  // Set the port for development server
+  env: {
+    PORT: '4000'
   }
 }
 
